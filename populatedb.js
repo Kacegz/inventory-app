@@ -5,8 +5,8 @@ console.log(
   "This script populates teas and tea types to your database. Run this script by typing: node populatedb"
 );
 
-const Tea = require("./models/teas");
-const TeaType = require("./models/teaTypes");
+const Tea = require("./models/tea");
+const TeaType = require("./models/teaType");
 
 const teas = [];
 const teaTypes = [];
