@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
-</html>
+<%- include('header'); %>
+<div id="welcome">
+  <h1>Welcome to Teapot!</h1>
+  <div>
+    <h3>Number of teas: <%=tea_count %></h3>
+    <h3>Number of tea types: <%=type_count%></h3>
+  </div>
+</div>
+<%- include('footer'); %>

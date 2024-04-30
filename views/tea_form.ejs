@@ -1,0 +1,42 @@
+<%- include('header'); %>
+<h1><%= title %></h1>
+<form action="" method="post">
+    <div class="formgroup">
+        <label for="name">
+            Name:<br>
+            <input type="text" name="name" id="" placeholder="Enter tea name" required>
+        </label>
+    </div>
+    <div class="formgroup">
+        <label for="category">
+            Tea type:<br>
+            <select name="category" id="" required>
+                <option value="" disabled selected hidden>---Select a category---</option>
+                <% types.forEach(type => { %>
+                 <option value=<%- type._id %>><%- type.name %></option>
+                <% }) %>
+            </select>
+        </label>
+    </div>
+    <div class="formgroup">
+        <label for="price">
+            Price:<br>
+            <input type="number" name="price" id="" placeholder="Enter tea price" required>
+        </label>
+    </div>
+    <div class="formgroup">
+        <label for="quantity">
+            Quantity:<br>
+            <input type="number" name="quantity" id="" placeholder="Enter quantity" required >
+        </label>
+    </div>
+    <button type="submit">Submit</button>
+</form>
+<% if (errors) { %>
+    <ul>
+        <% errors.forEach(error => { %>
+         <li><%= error.msg %></li>
+        <% }) %>
+    </ul>
+<% } %>
+<%- include('footer'); %>

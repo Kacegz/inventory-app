@@ -1,0 +1,11 @@
+<%- include('header'); %>
+    <h1><%- type.name %></h1>
+    <p><%=type.description%></p>
+    <h3>Teas in that type:</h3>
+    <ul>
+        <% teas.forEach(tea => { %>
+            <li><a href=<%=tea.url%>><%=tea.name%></a></li>
+        <% }) %>
+        
+    </ul>
+<%- include('footer'); %>
