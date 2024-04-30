@@ -27,11 +27,38 @@ exports.teatype_detail = asyncHandler(async (req, res, next) => {
   });
 });
 exports.teatype_create_get = asyncHandler(async (req, res) => {
-  res.send("not implemented: tea type create get");
+  res.render("teatype_form", {
+    title: "Add a new tea type",
+    errors: [],
+  });
 });
-exports.teatype_create_post = asyncHandler(async (req, res) => {
-  res.send("not implemented: tea type create post");
-});
+exports.teatype_create_post = [
+  body("name", "Name must contain at least 3 letters")
+    .trim()
+    .isLength({ min: 3 })
+    .escape(),
+  body("description").optional({ values: "falsy" }).escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    const type = new Type({
+      name: req.body.name,
+      description: req.body.description,
+    });
+
+    if (!errors.isEmpty()) {
+      res.render("teatype_form", {
+        title: "Add a new tea type",
+        type: type,
+        errors: errors.array(),
+      });
+    } else {
+      await type.save();
+      res.redirect(type.url);
+    }
+  }),
+];
 exports.teatype_delete_get = asyncHandler(async (req, res) => {
   res.send("not implemented: tea type delete get");
 });

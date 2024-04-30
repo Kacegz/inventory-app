@@ -1,0 +1,25 @@
+<%- include('header'); %>
+<h1><%= title %></h1>
+<form action="" method="post">
+    <div class="formgroup">
+        <label for="name">
+            Name:<br>
+            <input type="text" name="name" id="" placeholder="Enter tea type name" required>
+        </label>
+    </div>
+    <div class="formgroup">
+        <label for="description">
+            Description:<br>
+            <textarea name="description" id="" cols="20" rows="5" maxlength="80" ></textarea>
+        </label>
+    </div>
+    <button type="submit">Submit</button>
+</form>
+<% if (errors) { %>
+    <ul>
+        <% errors.forEach(error => { %>
+         <li><%= error.msg %></li>
+        <% }) %>
+    </ul>
+<% } %>
+<%- include('footer'); %>
