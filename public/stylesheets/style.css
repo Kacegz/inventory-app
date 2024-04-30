@@ -1,6 +1,6 @@
 :root{
-  --nav:#1A4D2E;
-  --main: #4F6F52;
+  --nav:#1a4d2e;
+  --main: rgba(79, 111, 82,0.5);
   --light:#E8DFCA;
   --font:#F5EFE6;
 }
@@ -17,6 +17,11 @@ a {
   display: grid;
   grid-template-columns: 1fr 5fr;
   min-height: 100vh;
+  background-image: url("../images/bg.jpg");
+  background-position: right;
+  background-repeat: no-repeat;
+  background-size:cover;
+  backdrop-filter: blur(10px);
 }
 #navbar{
   background-color: var(--nav);
@@ -24,12 +29,14 @@ a {
 }
 #navbar>h2>a{
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
+  gap: 20px;
 }
 .logo{
   width: 60px;
   height: 60px;
+  transition: transform 500ms ease-in-out 0.2s;
 }
 .navelement{
   border-top: 1px solid var(--light);
@@ -38,10 +45,13 @@ a {
 }
 #main{
   padding-top: 50px;
-  background-color: var(--main);
+  background-color: var(--main,0.6);
   padding-left: 50px;
   display: flex;
   flex-direction: column;
+  margin: 20px;
+  border-radius: 40px;
+  backdrop-filter: blur(10px);
 }
 #welcome{
   flex: 1;
@@ -53,4 +63,10 @@ a {
 }
 .formgroup{
   margin: 20px;
+}
+textarea{
+  resize: none;
+}
+.logo:hover{
+  transform: rotate(-25deg);
 }
