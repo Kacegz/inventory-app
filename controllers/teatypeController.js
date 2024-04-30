@@ -1,15 +1,30 @@
-const teaType = require("../models/teaType");
+const Type = require("../models/teaType");
+const Tea = require("../models/tea");
 const asyncHandler = require("express-async-handler");
+const { body, validationResult } = require("express-validator");
 
 exports.teatype_list = asyncHandler(async (req, res) => {
-  const alltypes = await teaType.find().sort({ name: 1 }).exec();
+  const alltypes = await Type.find().sort({ name: 1 }).exec();
   res.render("teatype_list", {
     title: "Tea type list:",
-    teatype_list: alltypes,
+    types: alltypes,
   });
 });
-exports.teatype_detail = asyncHandler(async (req, res) => {
-  res.send(`not implemented: tea type detail ${req.params.id}`);
+exports.teatype_detail = asyncHandler(async (req, res, next) => {
+  const [type, teasInType] = await Promise.all([
+    Type.findById(req.params.id).exec(),
+    Tea.find({ category: req.params.id }).exec(),
+  ]);
+  if (type == null) {
+    const err = new Error("Type not found");
+    err.status = 404;
+    return next(err);
+  }
+  res.render("teatype_detail", {
+    title: "Type details",
+    type: type,
+    teas: teasInType,
+  });
 });
 exports.teatype_create_get = asyncHandler(async (req, res) => {
   res.send("not implemented: tea type create get");
