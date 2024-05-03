@@ -45,7 +45,7 @@ exports.tea_create_post = [
     .trim()
     .isLength({ min: 3 })
     .escape(),
-  body("description").optional({ values: "falsy" }).escape(),
+  body("description").optional({ values: "falsy" }).trim().escape(),
   body("category", "Category must not be empty")
     .trim()
     .isLength({ min: 1 })
