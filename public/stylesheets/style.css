@@ -128,7 +128,7 @@ select{
   color:var(--font);
   padding: 5px;
   padding-left: 20px;
-  padding-right: 20px;
+  padding-right: 60px;
   font-size: 18px;
 }
 textarea{
@@ -153,4 +153,5 @@ textarea{
 ::-webkit-scrollbar-thumb {
   background: var(--nav);
   border-radius: 10px;
+  border: 1px solid var(--font);
 }
