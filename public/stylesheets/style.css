@@ -5,11 +5,19 @@
   --light:#E8DFCA;
   --font:#F5EFE6;
 }
+@font-face {
+  font-family: Roboto;
+  src: url(./Roboto-Regular.ttf);
+}
+@font-face {
+  font-family: Handlee;
+  src: url(./Handlee-Regular.ttf);
+}
 body {
   margin:0;
-  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: "Handlee","Roboto","Lucida Grande", Helvetica, Arial, sans-serif;
   color: var(--font);
-  font-size: 18px;
+  font-size: 20px;
 }
 a {
   color: var(--font);
@@ -55,7 +63,7 @@ a {
   padding-left: 50px;
   display: flex;
   flex-direction: column;
-  margin: 3vw;
+  margin: 40px;
   border-radius: 40px;
   backdrop-filter: blur(10px);
   
@@ -72,7 +80,6 @@ a {
 .formgroup{
   margin: 20px;
 }
-
 .bottom{
   flex: 1;
   display: flex;
