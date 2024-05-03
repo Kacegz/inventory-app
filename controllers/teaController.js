@@ -99,8 +99,63 @@ exports.tea_delete_post = asyncHandler(async (req, res) => {
   res.redirect("/teas");
 });
 exports.tea_update_get = asyncHandler(async (req, res) => {
-  res.send("not impelemented: tea create get");
+  const [tea, types] = await Promise.all([
+    Tea.findById(req.params.id),
+    Type.find({}).sort({ name: 1 }).exec(),
+  ]);
+  if (tea === undefined) {
+    const err = new Error("Tea not found");
+    err.status = 404;
+    return next(err);
+  }
+  res.render("tea_form", {
+    title: "Update tea",
+    tea: tea,
+    types: types,
+  });
 });
-exports.tea_update_post = asyncHandler(async (req, res) => {
-  res.send("not impelemented: tea update post");
-});
+exports.tea_update_post = [
+  body("name", "Name must be longer than 3 characters")
+    .trim()
+    .isLength({ min: 3 })
+    .escape(),
+  body("description").optional({ values: "falsy" }).escape(),
+  body("category", "Category must not be empty")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("price", "price must not be empty")
+    .isLength({ min: 1 })
+    .isNumeric()
+    .withMessage("price must be a number")
+    .escape(),
+  body("quantity", "quantity must not be empty")
+    .isLength({ min: 1 })
+    .isNumeric()
+    .withMessage("quantity must be a number")
+    .escape(),
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+    const tea = new Tea({
+      name: req.body.name,
+      description: req.body.description,
+      category: req.body.category,
+      price: req.body.price,
+      quantity: req.body.quantity,
+      _id: req.params.id,
+    });
+
+    if (!errors.isEmpty()) {
+      const allTypes = await Type.find({}).sort({ name: 1 }).exec();
+      res.render("tea_form", {
+        title: "Add a new tea",
+        types: allTypes,
+        tea: tea,
+        errors: errors.array(),
+      });
+    } else {
+      const newTea = await Tea.findByIdAndUpdate(req.params.id, tea);
+      res.redirect(newTea.url);
+    }
+  }),
+];
