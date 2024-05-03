@@ -8,4 +8,12 @@
         <% }) %>
         
     </ul>
+    <div class="bottom">
+        <form action="<%- type.id %>/update" method="get">
+            <input type="submit" value="Update type">
+        </form>
+        <form action="<%- type.id %>/delete" method="get">
+            <input type="submit" value="Delete type">
+        </form>
+    </div>
 <%- include('footer'); %>

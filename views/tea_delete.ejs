@@ -1,0 +1,7 @@
+<%- include('header'); %>
+<h1>Do you wish to delete <%- tea.name %>?</h1>
+<form action="" method="post">
+    <input type="hidden" name="teaid" value="<%= tea.id %>">
+    <button type="submit">Delete</button>
+</form>
+<%- include('footer'); %>

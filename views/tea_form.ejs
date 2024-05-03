@@ -4,7 +4,7 @@
     <div class="formgroup">
         <label for="name">
             Name:<br>
-            <input type="text" name="name" id="" placeholder="Enter tea name" required>
+            <input type="text" name="name" id="" placeholder="Enter tea name" value="<%= typeof tea!='undefined' ? tea.name : '' %>" required >
         </label>
     </div>
     <div class="formgroup">
@@ -13,7 +13,11 @@
             <select name="category" id="" required>
                 <option value="" disabled selected hidden>---Select a category---</option>
                 <% types.forEach(type => { %>
-                 <option value=<%- type._id %>><%- type.name %></option>
+                    <% if (typeof tea!='undefined' && tea.category._id.toString()===type._id.toString()) { %>
+                        <option selected value=<%- type._id %> ><%- type.name %></option>
+                   <% } else { %>
+                 <option value=<%- type._id %> ><%- type.name %></option>
+                 <%}%>
                 <% }) %>
             </select>
         </label>
@@ -21,24 +25,24 @@
     <div class="formgroup">
         <label for="price">
             Price:<br>
-            <input type="number" name="price" id="" placeholder="Enter tea price" required>
+            <input type="number" name="price" id="" placeholder="Enter tea price" value=<%= typeof tea!='undefined' ? tea.price : '' %> required>
         </label>
     </div>
     <div class="formgroup">
         <label for="quantity">
             Quantity:<br>
-            <input type="number" name="quantity" id="" placeholder="Enter quantity" required >
+            <input type="number" name="quantity" id="" placeholder="Enter quantity" value=<%= typeof tea!='undefined' ? tea.quantity : '' %> required >
         </label>
     </div>
     <div class="formgroup">
         <label for="description">
             Description:<br>
-            <textarea name="description" id="" cols="20" rows="5" maxlength="80" ></textarea>
+            <textarea name="description" id="" cols="20" rows="5" maxlength="80" ><%= typeof tea!='undefined' ? tea.description : '' %></textarea>
         </label>
     </div>
-    <button type="submit">Submit</button>
+    <input type="submit" value="Save tea">
 </form>
-<% if (errors) { %>
+<% if (typeof errors!="undefined") { %>
     <ul>
         <% errors.forEach(error => { %>
          <li><%= error.msg %></li>

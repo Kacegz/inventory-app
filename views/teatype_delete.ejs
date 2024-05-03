@@ -1,0 +1,13 @@
+<%- include('header'); %>
+    <h1>Do you wish to delete <%- type.name %> and all of its teas?</h1>
+    <h2>Those teas will be removed as well:</h2>
+    <ul>
+        <% teas.forEach(tea => { %>
+         <li><%= tea.name %></li>
+        <% }) %>
+    </ul>
+    <form action="" method="post">
+        <input type="hidden" name="typeid" value="<%= type.id %>">
+        <input type="submit" value="Delete">
+    </form>
+<%- include('footer'); %>

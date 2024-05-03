@@ -38,7 +38,6 @@ exports.tea_create_get = asyncHandler(async (req, res) => {
   res.render("tea_form", {
     title: "Add a new tea",
     types: allTypes,
-    errors: [],
   });
 });
 exports.tea_create_post = [
@@ -74,7 +73,7 @@ exports.tea_create_post = [
     if (!errors.isEmpty()) {
       const allTypes = await Type.find({}).sort({ name: 1 }).exec();
       res.render("tea_form", {
-        title: "Add new tea",
+        title: "Add a new tea",
         types: allTypes,
         tea: tea,
         errors: errors.array(),
@@ -86,10 +85,18 @@ exports.tea_create_post = [
   }),
 ];
 exports.tea_delete_get = asyncHandler(async (req, res) => {
-  res.send("not impelemented: tea delete get");
+  const tea = await Tea.findById(req.params.id).exec();
+  if (tea === null) {
+    res.redirect("/teas");
+  }
+  res.render("tea_delete", {
+    title: "Delete tea",
+    tea: tea,
+  });
 });
 exports.tea_delete_post = asyncHandler(async (req, res) => {
-  res.send("not impelemented: tea delete post");
+  await Tea.findByIdAndDelete(req.body.teaid);
+  res.redirect("/teas");
 });
 exports.tea_update_get = asyncHandler(async (req, res) => {
   res.send("not impelemented: tea create get");

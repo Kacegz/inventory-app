@@ -1,4 +1,18 @@
 <%- include('header'); %>
     <h1><%- tea.name %></h1>
-    <h2>Category: <%- tea.category.name %></h2>
+    <h4>Category: <%- tea.category.name %></h4>
+    <% if (tea.description!=null) { %>
+        <p><%=tea.description%></p>
+    <% } %>
+    <p>Price: <%=tea.price%></p>
+    <p>Quantity: <%=tea.quantity%></p>
+    
+    <div class="bottom">
+        <form action="<%- tea.id %>/update" method="get">
+            <input type="submit" value="Update">
+        </form>
+        <form action="<%- tea.id %>/delete" method="get">
+            <input type="submit" value="Delete">
+        </form>
+    </div>
 <%- include('footer'); %>

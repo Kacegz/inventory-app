@@ -29,7 +29,6 @@ exports.teatype_detail = asyncHandler(async (req, res, next) => {
 exports.teatype_create_get = asyncHandler(async (req, res) => {
   res.render("teatype_form", {
     title: "Add a new tea type",
-    errors: [],
   });
 });
 exports.teatype_create_post = [
@@ -37,7 +36,9 @@ exports.teatype_create_post = [
     .trim()
     .isLength({ min: 3 })
     .escape(),
-  body("description").optional({ values: "falsy" }).escape(),
+  body("description", "Description must not be empty")
+    .isLength({ min: 1 })
+    .escape(),
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
@@ -60,14 +61,63 @@ exports.teatype_create_post = [
   }),
 ];
 exports.teatype_delete_get = asyncHandler(async (req, res) => {
-  res.send("not implemented: tea type delete get");
+  const [type, teas] = await Promise.all([
+    Type.findById(req.params.id).exec(),
+    Tea.find({ category: req.params.id }, "name").exec(),
+  ]);
+  if (type === null) {
+    redirect("/types");
+  }
+  res.render("teatype_delete", {
+    title: "Delete type",
+    type: type,
+    teas: teas,
+  });
 });
 exports.teatype_delete_post = asyncHandler(async (req, res) => {
-  res.send("not implemented: tea type delete post");
+  await Tea.deleteMany({ category: req.body.typeid }).exec();
+  await Type.findByIdAndDelete(req.body.typeid).exec();
+  res.redirect("/types");
 });
 exports.teatype_update_get = asyncHandler(async (req, res) => {
-  res.send("not implemented: tea type update get");
+  const type = await Type.findById(req.params.id);
+  if (type === null) {
+    const err = new Error("Type not found");
+    err.status = 404;
+    return next(err);
+  }
+  res.render("teatype_form", {
+    title: "Update type",
+    type: type,
+  });
 });
-exports.teatype_update_post = asyncHandler(async (req, res) => {
-  res.send("not implemented: tea type update post");
-});
+exports.teatype_update_post = [
+  body("name", "Name must contain at least 3 letters")
+    .trim()
+    .isLength({ min: 3 })
+    .escape(),
+  body("description", "Description must not be empty")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    const type = new Type({
+      name: req.body.name,
+      description: req.body.description,
+      _id: req.params.id,
+    });
+    if (!errors.isEmpty()) {
+      res.render("teatype_form", {
+        title: "Add a new tea type",
+        type: type,
+        errors: errors.array(),
+      });
+    } else {
+      const updatedType = await Type.findByIdAndUpdate(req.params.id, type, {});
+      res.redirect(updatedType.url);
+    }
+  }),
+];
