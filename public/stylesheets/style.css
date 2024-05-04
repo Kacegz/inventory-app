@@ -155,3 +155,29 @@ textarea{
   border-radius: 10px;
   border: 1px solid var(--font);
 }
+@media screen and (max-width:1000px) {
+  #wrapper{
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 9fr;
+  }
+  #navbar{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+  #navbar>h2{
+    grid-column: 1/5;
+  }
+  #navbar>br{
+    display: none;
+  }
+  .navelement{
+    border-top: 0px;
+    border-bottom: 1px solid var(--font);
+    text-align: center;
+  }
+  #main{
+    align-items: center;
+    text-align: center;
+  }
+}
