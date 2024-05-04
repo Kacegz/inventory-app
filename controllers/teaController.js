@@ -52,13 +52,13 @@ exports.tea_create_post = [
     .escape(),
   body("price", "price must not be empty")
     .isLength({ min: 1 })
-    .isNumeric()
-    .withMessage("price must be a number")
+    .isInt({ min: 1 })
+    .withMessage("price must be higher than 1")
     .escape(),
   body("quantity", "quantity must not be empty")
     .isLength({ min: 1 })
-    .isNumeric()
-    .withMessage("quantity must be a number")
+    .isInt({ min: 1 })
+    .withMessage("quantity must be higher than 1")
     .escape(),
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
@@ -126,13 +126,13 @@ exports.tea_update_post = [
     .escape(),
   body("price", "price must not be empty")
     .isLength({ min: 1 })
-    .isNumeric()
-    .withMessage("price must be a number")
+    .isInt({ min: 1 })
+    .withMessage("price must be higher than 1")
     .escape(),
   body("quantity", "quantity must not be empty")
     .isLength({ min: 1 })
-    .isNumeric()
-    .withMessage("quantity must be a number")
+    .isInt({ min: 1 })
+    .withMessage("quantity must be higher than 1")
     .escape(),
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
